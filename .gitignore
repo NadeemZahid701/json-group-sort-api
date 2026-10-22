@@ -1,8 +1,7 @@
 # Java / Maven / Spring Boot
 /target/
 !.mvn/wrapper/maven-wrapper.jar
-.mvn/wrapper/*.jar
-.mvn/wrapper/*.properties
+!.mvn/wrapper/maven-wrapper.properties
 
 # IDE
 .idea/
