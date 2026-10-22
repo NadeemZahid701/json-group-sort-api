@@ -3,6 +3,7 @@ package com.example.datasetapi.controller;
 import com.example.datasetapi.dto.DatasetQueryResponse;
 import com.example.datasetapi.dto.RecordCreationResponse;
 import com.example.datasetapi.service.DatasetRecordService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -51,8 +53,10 @@ public class DatasetController {
     public ResponseEntity<RecordCreationResponse> createRecord(
             @Parameter(description = "Dataset name. Allowed pattern: letters, digits, underscores, and hyphens; max 100 chars.")
             @PathVariable String datasetName,
-            @RequestBody JsonNode payload) {
-        RecordCreationResponse response = datasetRecordService.addRecord(datasetName, payload);
+            @RequestBody Map<String, Object> payload) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonPayload = objectMapper.valueToTree(payload);
+        RecordCreationResponse response = datasetRecordService.addRecord(datasetName, jsonPayload);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

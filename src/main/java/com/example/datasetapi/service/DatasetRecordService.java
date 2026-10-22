@@ -9,14 +9,13 @@ import com.example.datasetapi.exception.InvalidQueryParameterException;
 import com.example.datasetapi.exception.UnsupportedJsonValueException;
 import com.example.datasetapi.repository.DatasetRecordRepository;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +50,7 @@ public class DatasetRecordService {
 
         if (groupBy == null && sortBy == null) {
             return new DatasetQueryResponse(validatedDatasetName, null, null, normalizedOrder, jsonRecords.size(), null,
-                    jsonRecords);
+                    toPlainJsonList(jsonRecords));
         }
 
         if (groupBy != null && !groupBy.isBlank() && records.isEmpty()) {
@@ -71,17 +70,35 @@ public class DatasetRecordService {
             }
         }
 
-        Map<String, List<JsonNode>> groupedRecords = new LinkedHashMap<>();
+        Map<String, List<Object>> groupedRecords = new LinkedHashMap<>();
         if (groupBy != null && !groupBy.isBlank()) {
-            groupedRecords = groupRecords(jsonRecords, groupBy, sortBy, normalizedOrder);
+            groupedRecords = groupRecordsAsPlainJson(jsonRecords, groupBy, sortBy, normalizedOrder);
             int count = jsonRecords.size();
             return new DatasetQueryResponse(validatedDatasetName, groupBy, sortBy, normalizedOrder, count,
                     groupedRecords, null);
         }
 
-        List<JsonNode> sortedRecords = sortRecords(jsonRecords, sortBy, normalizedOrder);
+        List<Object> sortedRecords = toPlainJsonList(sortRecords(jsonRecords, sortBy, normalizedOrder));
         return new DatasetQueryResponse(validatedDatasetName, null, sortBy, normalizedOrder, jsonRecords.size(), null,
                 sortedRecords);
+    }
+
+    private List<Object> toPlainJsonList(List<JsonNode> records) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<Object> plain = new ArrayList<>();
+        for (JsonNode record : records) {
+            plain.add(objectMapper.convertValue(record, Object.class));
+        }
+        return plain;
+    }
+
+    private Map<String, List<Object>> groupRecordsAsPlainJson(List<JsonNode> records, String groupBy, String sortBy, String order) {
+        Map<String, List<JsonNode>> grouped = groupRecords(records, groupBy, sortBy, order);
+        Map<String, List<Object>> plain = new LinkedHashMap<>();
+        for (Map.Entry<String, List<JsonNode>> entry : grouped.entrySet()) {
+            plain.put(entry.getKey(), toPlainJsonList(entry.getValue()));
+        }
+        return plain;
     }
 
     private Map<String, List<JsonNode>> groupRecords(List<JsonNode> records, String groupBy, String sortBy, String order) {

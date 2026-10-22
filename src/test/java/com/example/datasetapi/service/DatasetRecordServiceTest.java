@@ -85,8 +85,8 @@ class DatasetRecordServiceTest {
         DatasetQueryResponse response = service.queryDataset("employee_dataset", null, "age", "asc");
 
         assertEquals("asc", response.getOrder());
-        assertEquals(25, response.getSortedRecords().getFirst().get("age").asInt());
-        assertEquals(30, response.getSortedRecords().getLast().get("age").asInt());
+        assertEquals(25, ((Number) ((java.util.Map<String, Object>) response.getSortedRecords().getFirst()).get("age")).intValue());
+        assertEquals(30, ((Number) ((java.util.Map<String, Object>) response.getSortedRecords().getLast()).get("age")).intValue());
     }
 
     @Test
@@ -101,8 +101,8 @@ class DatasetRecordServiceTest {
         DatasetQueryResponse response = service.queryDataset("employee_dataset", null, "age", "desc");
 
         assertEquals("desc", response.getOrder());
-        assertEquals(30, response.getSortedRecords().getFirst().get("age").asInt());
-        assertEquals(25, response.getSortedRecords().getLast().get("age").asInt());
+        assertEquals(30, ((Number) ((java.util.Map<String, Object>) response.getSortedRecords().getFirst()).get("age")).intValue());
+        assertEquals(25, ((Number) ((java.util.Map<String, Object>) response.getSortedRecords().getLast()).get("age")).intValue());
     }
 
     @Test
@@ -117,7 +117,7 @@ class DatasetRecordServiceTest {
         DatasetQueryResponse response = service.queryDataset("employee_dataset", "department", "age", "asc");
 
         assertEquals(2, response.getGroupedRecords().get("Engineering").size());
-        assertEquals(25, response.getGroupedRecords().get("Engineering").getFirst().get("age").asInt());
+        assertEquals(25, ((Number) ((java.util.Map<String, Object>) response.getGroupedRecords().get("Engineering").getFirst()).get("age")).intValue());
     }
 
     @Test

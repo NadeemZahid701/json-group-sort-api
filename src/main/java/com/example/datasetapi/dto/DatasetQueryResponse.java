@@ -1,7 +1,6 @@
 package com.example.datasetapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 
@@ -13,11 +12,11 @@ public class DatasetQueryResponse {
     private final String sortBy;
     private final String order;
     private final int count;
-    private final Map<String, List<JsonNode>> groupedRecords;
-    private final List<JsonNode> sortedRecords;
+    private final Map<String, List<Object>> groupedRecords;
+    private final List<Object> sortedRecords;
 
     public DatasetQueryResponse(String dataset, String groupBy, String sortBy, String order, int count,
-                                Map<String, List<JsonNode>> groupedRecords, List<JsonNode> sortedRecords) {
+                                Map<String, List<Object>> groupedRecords, List<Object> sortedRecords) {
         this.dataset = dataset;
         this.groupBy = groupBy;
         this.sortBy = sortBy;
@@ -47,11 +46,11 @@ public class DatasetQueryResponse {
         return count;
     }
 
-    public Map<String, List<JsonNode>> getGroupedRecords() {
+    public Map<String, List<Object>> getGroupedRecords() {
         return groupedRecords;
     }
 
-    public List<JsonNode> getSortedRecords() {
+    public List<Object> getSortedRecords() {
         return sortedRecords;
     }
 }
