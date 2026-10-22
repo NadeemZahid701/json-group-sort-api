@@ -1,8 +1,8 @@
 FROM eclipse-temurin:21-jdk AS build
 WORKDIR /workspace
 COPY . .
-RUN chmod +x mvnw || true
-RUN ./mvnw -q -DskipTests package
+RUN chmod +x mvnw
+RUN ./mvnw -DskipTests package
 
 FROM eclipse-temurin:21-jre
 WORKDIR /app
