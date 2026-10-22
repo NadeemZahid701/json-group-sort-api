@@ -36,8 +36,8 @@ A Spring Boot backend service that stores JSON records under a dataset name and 
    ```
 
 3. Open:
-   - Swagger UI: http://localhost:8080/swagger-ui/index.html
-   - Actuator health: http://localhost:8080/actuator/health
+   - Swagger UI: http://localhost:9092/swagger-ui/index.html
+    - Actuator health: http://localhost:9092/actuator/health
 
 ## Example Requests
 
