@@ -5,7 +5,7 @@ This is a short demonstration sequence for recording a live API walkthrough.
 ## Demo Flow
 
 1. Start the application with PostgreSQL running.
-2. Open Swagger UI at http://localhost:8080/swagger-ui/index.html
+2. Open Swagger UI at http://localhost:9092/swagger-ui/index.html
 3. POST a sample record to the `employee_dataset` dataset.
 4. Query grouped records by `department`.
 5. Show the response structure for grouped JSON data.
@@ -14,11 +14,11 @@ This is a short demonstration sequence for recording a live API walkthrough.
 ## Example Commands
 
 ```bash
-curl -X POST http://localhost:8080/api/dataset/employee_dataset/record \
+curl -X POST http://localhost:9092/api/dataset/employee_dataset/record \
   -H "Content-Type: application/json" \
   -d '{"id":1,"name":"John Doe","age":30,"department":"Engineering"}'
 
-curl "http://localhost:8080/api/dataset/employee_dataset/query?groupBy=department&sortBy=age&order=asc"
+curl "http://localhost:9092/api/dataset/employee_dataset/query?groupBy=department&sortBy=age&order=asc"
 ```
 
 ## Talking Points

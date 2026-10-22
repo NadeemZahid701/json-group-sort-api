@@ -199,10 +199,10 @@ To run the app locally:
    mvn spring-boot:run
 
 3. Open Swagger UI:
-   http://localhost:8080/swagger-ui.html
+   http://localhost:9092/swagger-ui.html
 
 4. Check health status:
-   http://localhost:8080/actuator/health
+   http://localhost:9092/actuator/health
 
 ## 11. Important Notes
 The project was built and verified to run using the local Java and Maven installation available in the environment.

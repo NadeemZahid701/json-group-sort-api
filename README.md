@@ -37,14 +37,14 @@ A Spring Boot backend service that stores JSON records under a dataset name and 
 
 3. Open:
    - Swagger UI: http://localhost:9092/swagger-ui/index.html
-    - Actuator health: http://localhost:9092/actuator/health
+   - Actuator health: http://localhost:9092/actuator/health
 
 ## Example Requests
 
 ### Add a record
 
 ```bash
-curl -X POST http://localhost:8080/api/dataset/employee_dataset/record \
+curl -X POST http://localhost:9092/api/dataset/employee_dataset/record \
   -H "Content-Type: application/json" \
   -d '{"id":1,"name":"John Doe","age":30,"department":"Engineering"}'
 ```
@@ -52,7 +52,7 @@ curl -X POST http://localhost:8080/api/dataset/employee_dataset/record \
 ### Query grouped records
 
 ```bash
-curl "http://localhost:8080/api/dataset/employee_dataset/query?groupBy=department&sortBy=age&order=asc"
+curl "http://localhost:9092/api/dataset/employee_dataset/query?groupBy=department&sortBy=age&order=asc"
 ```
 
 ## Project Status
